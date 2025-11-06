@@ -75,6 +75,38 @@ def parse_args() -> argparse.Namespace:
         help="Activation function to use"
     )
 
+    # Style control parameters
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=None,
+        help="Random seed for reproducible generation"
+    )
+    parser.add_argument(
+        "--scale",
+        type=float,
+        default=1.0,
+        help="Coordinate space scale (lower = finer details, higher = coarser)"
+    )
+    parser.add_argument(
+        "--fourier",
+        action="store_true",
+        help="Enable Fourier feature encoding for richer textures"
+    )
+    parser.add_argument(
+        "--num-frequencies",
+        type=int,
+        default=5,
+        help="Number of Fourier frequency components (used with --fourier)"
+    )
+    parser.add_argument(
+        "--palette",
+        type=str,
+        default=None,
+        choices=["grayscale", "warm", "cool", "vibrant", "pastel", "earth"],
+        help="Apply a color palette constraint"
+    )
+
     # Display options
     parser.add_argument(
         "-s", "--fig-size",
@@ -159,12 +191,25 @@ def main() -> None:
             num_neurons=args.neurons,
             num_layers=args.layers,
             activation=activation,
+            seed=args.seed,
+            scale=args.scale,
+            fourier_features=args.fourier,
+            num_frequencies=args.num_frequencies,
+            palette=args.palette,
         )
 
         print(f"✓ Image {i + 1} generated successfully")
         print(f"  Architecture: {args.layers} layers × {args.neurons} neurons")
         print(f"  Activation: {args.activation}")
         print(f"  Dimensions: {args.width}×{args.height}")
+        if args.seed is not None:
+            print(f"  Seed: {args.seed}")
+        if args.scale != 1.0:
+            print(f"  Scale: {args.scale}")
+        if args.fourier:
+            print(f"  Fourier features: {args.num_frequencies} frequencies")
+        if args.palette:
+            print(f"  Palette: {args.palette}")
 
     print(f"\nAll done! Generated {args.batch} image(s)")
 
