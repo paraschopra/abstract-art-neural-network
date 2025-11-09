@@ -30,6 +30,7 @@ This codebase has been modernized with:
 
 - **Python Module** (`art_generator.py`): Clean, documented, type-annotated code
 - **Command-Line Interface** (`generate_art.py`): Generate art from the terminal
+- **Animation Support** (`animate_art.py`, `generate_animation.py`): Create mesmerizing animated art! ✨
 - **Modern PyTorch Practices**: GPU support (CUDA/MPS), efficient tensor operations
 - **Better Project Structure**: Proper requirements, .gitignore, modular design
 - **Enhanced Jupyter Notebook**: Uses the module, better documentation
@@ -127,6 +128,60 @@ from art_generator import generate_image
 high_res = generate_image(network, width=1920, height=1080)
 ```
 
+### Animations (NEW!)
+
+Generate mesmerizing animated art with multiple effects:
+
+```bash
+# Morph between two networks
+python generate_animation.py --type morph --output morph.gif
+
+# Zoom animation
+python generate_animation.py --type zoom --output zoom.mp4 --fps 60
+
+# Rotation animation
+python generate_animation.py --type rotate --rotations 2 --output spin.gif
+
+# Wave/pulse effect
+python generate_animation.py --type wave --output wave.mp4
+
+# Spiral/vortex effect
+python generate_animation.py --type spiral --output vortex.gif
+
+# Panning animation (circular, horizontal, or vertical)
+python generate_animation.py --type pan --pan-path circular --output pan.mp4
+
+# Combined effects (rotation + zoom + wave)
+python generate_animation.py --type combo --frames 120 --output combo.gif
+
+# High-res animation with custom parameters
+python generate_animation.py \
+    --type rotate \
+    --width 512 \
+    --height 512 \
+    --frames 120 \
+    --fps 60 \
+    --neurons 64 \
+    --layers 12 \
+    --output masterpiece.mp4
+```
+
+#### Animation Options
+
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-t, --type` | Animation type (morph, zoom, rotate, wave, spiral, pan, combo) | morph |
+| `-W, --width` | Animation width | 256 |
+| `-H, --height` | Animation height | 256 |
+| `-f, --frames` | Number of frames | 60 |
+| `--fps` | Frames per second | 30 |
+| `-o, --output` | Output file (.gif or .mp4) | Required |
+| `--zoom-start/end` | Zoom range | 1.0 / 0.2 |
+| `--rotations` | Full rotations | 1.0 |
+| `--wave-amplitude` | Wave strength | 0.1 |
+| `--spiral-strength` | Spiral strength | 10.0 |
+| `--pan-path` | Pan type (circular, horizontal, vertical) | circular |
+
 ### Jupyter Notebook (Interactive)
 
 For interactive exploration and experimentation:
@@ -163,7 +218,9 @@ The system uses a simple but powerful idea:
 ```
 abstract-art-neural-network/
 ├── art_generator.py          # Core module with modern Python code
-├── generate_art.py           # Command-line interface
+├── generate_art.py           # Command-line interface for static art
+├── animate_art.py            # Animation module with multiple effects
+├── generate_animation.py     # Command-line interface for animations
 ├── generate-art.ipynb        # Interactive Jupyter notebook
 ├── requirements.txt          # Python dependencies
 ├── .gitignore               # Git ignore patterns
